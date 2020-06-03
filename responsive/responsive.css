@@ -11,8 +11,15 @@
 	c5 = 128
 */
 
+.software{
+	background:url(software.png);
+	background-position: 0px 0px; 
+	width: 640px;
+	height: 480px;
+}
+
 /*r1 c1*/
-@media (min-width: 1200px) {
+@media screen and (min-width: 1200px) {
 	.software{
 		background:url(software.png);
 		background-position: 0px 0px; 
@@ -21,7 +28,7 @@
 	}
 }
 /*r1 c2*/
-@media (min-width: 1100px) and (max-width: 1200px) {
+@media screen and (min-width: 1100px) and (max-width: 1200px) {
 	.software{
 		background:url(software.png);
 		background-position: -128px 0px;
@@ -30,7 +37,7 @@
 	}
 }
 /*r1 c3*/
-@media (min-width: 1000px) and (max-width: 1100px) {
+@media screen and (min-width: 1000px) and (max-width: 1100px) {
 	.software{
 		background:url(software.png);
 		background-position: -256px 0px;
@@ -39,7 +46,7 @@
 	}
 }
 /*r1 c4*/
-@media (min-width: 900px) and (max-width: 1000px) {
+@media screen and (min-width: 900px) and (max-width: 1000px) {
 	.software{
 		background:url(software.png);
 		background-position: -384px 0px;
@@ -48,7 +55,7 @@
 	}
 }
 /*r1 c5*/
-@media (min-width: 800px) and (max-width: 900px) {
+@media screen and (min-width: 800px) and (max-width: 900px) {
 	.software{
 		background:url(software.png);
 		background-position: -512px 0px;
@@ -57,7 +64,7 @@
 	}
 }
 /*r2 c1*/
-@media (min-width: 700px) and (max-width: 800px) {
+@media screen and (min-width: 700px) and (max-width: 800px) {
 	.software{
 		background:url(software.png);
 		background-position: 0px -240px;
@@ -66,7 +73,7 @@
 	}
 }
 /*r2 c2*/
-@media (min-width: 600px) and (max-width: 700px) {
+@media screen and (min-width: 600px) and (max-width: 700px) {
 	.software{
 		background:url(software.png);
 		background-position: -128px -240px;
@@ -75,7 +82,7 @@
 	}
 }
 /*r2 c3*/
-@media (min-width: 500px) and (max-width: 600px) {
+@media screen and (min-width: 500px) and (max-width: 600px) {
 	.software{
 		background:url(software.png);
 		background-position: -256px -240px;
@@ -84,7 +91,7 @@
 	}
 }
 /*r2 c4*/
-@media (min-width: 400px) and (max-width: 500px) {
+@media screen and (min-width: 400px) and (max-width: 500px) {
 	.software{
 		background:url(software.png);
 		background-position: -384px -240px;
@@ -93,7 +100,7 @@
 	}
 }
 /*r2 c5*/
-@media (max-width: 400px) {
+@media screen and (max-width: 400px) {
 	.software{
 		background:url(software.png);
 		background-position: -512px -240px;
