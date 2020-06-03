@@ -5,7 +5,7 @@ chxw
 6/3/2020
 
 ## Summary:
-Practice using sprites and media queries.
+*Purpose*: Practice using sprites and media queries.
 
 ![Image of software.png](software.png)
 
@@ -23,14 +23,16 @@ Given the above image named software.png and using only one HTML file named inde
 - If the browser screen width is less than or equal to 400 pixels, display the last image, bottom-right ("What the customer really needed").
 
 ## Files:
-
-				.
-				├── README.md
-				├── index.html
-				├── responsive.css
-				└── software.png
+```
+.
+├── README.md
+├── index.html
+├── responsive.css
+└── software.png
+```
 
 ## Reflection:
+
 
 ## References:
 [https://stackoverflow.com/questions/7859336/why-are-my-css3-media-queries-not-working](https://stackoverflow.com/questions/7859336/why-are-my-css3-media-queries-not-working).
