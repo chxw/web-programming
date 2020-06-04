@@ -32,7 +32,7 @@ Given the above image named software.png and using only one HTML file named inde
 ```
 
 ## Reflection:
-
+Using "background-image" as a way to display an image as a class, the media queries, and sprite sheet were implemented correctly. No collaboration with others in this lab. Spent 2 hours on this lab. 
 
 ## References:
 [https://stackoverflow.com/questions/7859336/why-are-my-css3-media-queries-not-working](https://stackoverflow.com/questions/7859336/why-are-my-css3-media-queries-not-working).
