@@ -10,11 +10,25 @@
       jsonData = '[{"id":1,"content":"Do you really want to hurt me?","username":"Boy"},{"id":2,"content":"Do you really want to make me cry?","username":"George"}]';
       var obj = JSON.parse(jsonData);
 
-      document.getElementById("messages").innerHTML = obj[0].content + " " + obj[0].username + "<br>" + obj[1].content + " " + obj[1].username;
+      // document.getElementById("messages").innerHTML = obj[0].content + " " + obj[0].username + "<br>" + obj[1].content + " " + obj[1].username;
 
       // for (var i in obj){
-      // 	document.getElementById("messages").innerHTML = obj[i].content + " " + obj[i].username + "\n";
+      // 	document.getElementById("messages").innerHTML = obj[i].content + " " + obj[i].username + "<br>";
       // }
+
+      var output = "";
+
+      for (var i in obj){
+      	output += obj[i].content + " " + obj[i].username + "<br>";
+      }
+
+      // for (var i = 0; l = obj.length; i < l; i++){
+      // 	output += obj[i].content + " " + obj[i].username + "<br>";
+      // }
+
+      console.log(output);
+
+      document.getElementById("messages").innerHTML = output;
     }
   </script>
 </head>
