@@ -10,13 +10,41 @@
 
 <h1 id="title">Union Strike Folk Song</h1>
 
-<video src="https://www.cs.tufts.edu/comp/120/butwehavethepower.mp4" id="butwehavethepower" controls>
-	<track kind="captions" src="captions.vtt" srclang="en">
-</video>
-<div id="lyrics"></div>
+<video src="https://www.cs.tufts.edu/comp/120/butwehavethepower.mp4" id="butwehavethepower" controls></video>
 
 <script>
-	// Complete this section and create a CSS file named style.css
+	var video = document.getElementById("butwehavethepower");
+	video.addEventListener("timeupdate", function() {
+		if (this.currentTime > 6 && this.currentTime < 15){
+			document.getElementById("lyrics").innerHTML = "Lisa: <br> Come gather round, children, <br> It's high time ye learned, <br> 'Bout a hero named Homer <br> And a devil named Burns.";
+		}
+		else if (this.currentTime > 15 && this.currentTime < 16){
+			document.getElementById("lyrics").innerHTML = "";
+		}
+		else if (this.currentTime > 16 && this.currentTime < 27){
+			document.getElementById("lyrics").innerHTML = "We'll march 'till we drop <br> The girls and the fellas. <br> We'll fight 'till the death <br> Or else fold like umbrellas.";
+		}
+		else if (this.currentTime > 27 && this.currentTime < 38){
+			document.getElementById("lyrics").innerHTML = " ";
+		}
+		else if (this.currentTime > 38 && this.currentTime < 50) {
+			document.getElementById("lyrics").innerHTML = "So we'll march day and night <br> By the big cooling tower. <br> They have the plant <br> But we have the power.";
+		}
+		else if (this.currentTime > 50 && this.currentTime < 52){
+			document.getElementById("lyrics").innerHTML = "";
+		}
+		else if (this.currentTime > 52  && this.currentTime < 55 ) {
+			document.getElementById("lyrics").innerHTML = "Lenny <br> Now do \"Classical Gas!\".";
+		}
+		else if (this.currentTime > 55 && this.currentTime < 60 + 11){
+			document.getElementById("lyrics").innerHTML = "";
+		}
+		else if (this.currentTime > 60 + 12 && this.currentTime < 60 + 31){
+			document.getElementById("lyrics").innerHTML = "So we'll march day and night <br> By the big cooling tower. <br> They have the plant <br> But we have the power.";
+		}
+	});
 </script>
+
+<div id="lyrics"></div>
 </body>
 </html>	
