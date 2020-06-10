@@ -1,0 +1,16 @@
+body{
+	text-align: center;
+	font-family: "Georgia", serif;
+	background-image:url("bread-and-roses.png");
+}
+
+#title{
+	color: white;
+	background-color:black;
+}
+
+#lyrics{
+	color: white;
+	font-size: 18pt;
+	background-color: black;
+}

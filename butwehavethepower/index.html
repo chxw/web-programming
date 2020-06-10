@@ -16,7 +16,7 @@
 	var video = document.getElementById("butwehavethepower");
 	video.addEventListener("timeupdate", function() {
 		if (this.currentTime > 6 && this.currentTime < 15){
-			document.getElementById("lyrics").innerHTML = "Lisa: <br> Come gather round, children, <br> It's high time ye learned, <br> 'Bout a hero named Homer <br> And a devil named Burns.";
+			document.getElementById("lyrics").innerHTML = "<b>Lisa:</b> <br> Come gather round, children, <br> It's high time ye learned, <br> 'Bout a hero named Homer <br> And a devil named Burns.";
 		}
 		else if (this.currentTime > 15 && this.currentTime < 16){
 			document.getElementById("lyrics").innerHTML = "";
@@ -34,7 +34,7 @@
 			document.getElementById("lyrics").innerHTML = "";
 		}
 		else if (this.currentTime > 52  && this.currentTime < 55 ) {
-			document.getElementById("lyrics").innerHTML = "Lenny <br> Now do \"Classical Gas!\".";
+			document.getElementById("lyrics").innerHTML = "<b>Lenny:</b> <br> Now do \"Classical Gas!\".";
 		}
 		else if (this.currentTime > 55 && this.currentTime < 60 + 11){
 			document.getElementById("lyrics").innerHTML = "";
