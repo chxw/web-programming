@@ -7,7 +7,7 @@ It felt wrong to write a script that treated the JSON data as fixed in length, s
 
 In my lab, I first started with a `for..in` loop to iterate over the array created (`vehicles`). See snippet below.  Where for every entry in the array `vehicles`, that entry's held data is used to format the map markers and info window. 
 
-```
+```javascript
 for (var key in vehicles){
   if (vehicles.hasOwnProperty(key)){
     var id = vehicles[key].id;
@@ -55,7 +55,7 @@ My second attempt, I tried using the `forEach` method of the JS array object. I'
 
 See snippet below.
 
-```
+```javascript
 function initVehicle(vehicle){
   var id = vehicle.id;
   var lat = vehicle.latitude;
@@ -108,7 +108,7 @@ Lastly, I wondered if I created all these instances of marker, infowindow, and e
 
 ![image](working-stack.png)
 
-```
+```javascript
   var vehicleStack = [];
 
   ...
