@@ -34,7 +34,9 @@ var vehicles = [
 var map;
 var sboston = {lat: 42.352271, lng: -71.05524200000001};
 var car = 'car.png'
+var vehicleStack = [];
 
+// Initiate vehicle for map: create marker, infowindow, and eventhandler for infowindow to show
 function initVehicle(vehicle){
   var id = vehicle.id;
   var lat = vehicle.latitude;
@@ -65,6 +67,11 @@ function initVehicle(vehicle){
       infowindow.open(map,marker);
   });
 
+  vehicle.contentString = contentString;
+  vehicle.infoWindow = infowindow;
+  vehicle.marker = marker;
+
+  vehicleStack.push(vehicle);
 } 
 
 // Generate map
@@ -75,4 +82,13 @@ function initMap() {
   });
 
   vehicles.forEach(initVehicle);
+
+
+  // Get sight into vehicleStack
+  //
+  // for (let key in vehicleStack) {
+  //  if (vehicleStack.hasOwnProperty(key)) {
+  //     console.log(key, vehicleStack[key]);
+  //  }
+  // }
 }
