@@ -1,4 +1,72 @@
 
+## Name
+chxw
+
+## Date
+6/10/2020
+
+## Summary
+Ride-Hailing Service (Client-side) Part 1
+
+Given a list of vehicles with their locations, create a page that displays a Google Map of all the vehicles listed above. Requirements:
+
+- The map shall take up the entire page.
+- A CSS file is required in order for GMaps to work.
+- A separate file for JS. 
+- Center the map on latitude = 42.352271, longitude = -71.05524200000001. This location is South Station in Boston, MA.
+
+This lab has been correctly implemented, no errors show in the console, and all requirements have been fulfilled. Additionally, "info windows" have been implemented, as suggested from a Piazza post. No direct collaboration or discussion outside of Piazza and the Internet.
+
+## Files
+```
+.
+├── README.md
+├── dev
+│   ├── developer.css
+│   └── developer.js
+├── images
+│   ├── before-opt.png
+│   ├── car.png
+│   ├── graph-bar.png
+│   ├── graph-line.png
+│   ├── opt-1.png
+│   ├── opt-2.png
+│   ├── opt-3.png
+│   ├── opt-4.png
+│   ├── script-archived.png
+│   └── working-stack.png
+├── index.html
+├── script-archived.js
+├── script.js
+├── style.css
+└── vehicles.json
+```
+## Performance Optimization testing
+
+The following performance optimizations were performed. 
+1. Load CSS first, head section
+2. Minify CSS
+3. Move JS includes and code to bottom of HTML before closing body tag
+4. Minify JS code
+
+After each step, load times and size transferred were recorded to understand how each step affected performance. 
+
+_Before optimization:_
+![image](images/before-opt)
+
+_1_
+![image](images/opt-1)
+
+_2_
+![image](images/opt-2)
+
+_3_
+![image](images/opt-3)
+
+_4_
+![image](images/opt-4)
+
+My results look a little wonky: it looks as if steps 1-3 improve optimization speed and step 4 slowed down optimization speed for some reason.
 
 ## Reflections
 It felt wrong to write a script that treated the JSON data as fixed in length, specifically for a ride-hailing app, where the # of cars available at any given time would be unknown. Perhaps it makes more sense to treat JSON data as fixed in length in other cases, for example, making the same recurring API call and expecting the same length for the JSON data received. 
@@ -45,7 +113,7 @@ for (var key in vehicles){
 
 This version created successfully unique instances of markers but it did *not* create unique instances of markers. Furthermore, every time any car was clicked, only 1 infowindow for 1 car showed up, no matter which car was clicked (i.e. it seems only 1 instance of infowindow was created). My guess is that there were unique instances of all the markers and infowindows via the `var ... new` initialization, as well as unique event handlers because the page responded whenever any car was clicked. But the event handler was listening to only 1 `infowindow` which is referenced in the `marker.addListener` line. As in, the event handler would listen to 1 marker, but move on to listening to the next marker at each iteration of the for loop. To see this version in action, change line 12 in `index.html` from `<script src="script.js"></script>` to `<script src="script-archived.js"></script>`. Below is a screenshot:
 
-![image](script-archived.png)
+![image](images/script-archived.png)
 
 ### forEach
 
@@ -106,7 +174,7 @@ I'm not entirely sure why the `forEach` attempt worked whereas the `for ..in` lo
 
 Lastly, I wondered if I created all these instances of marker, infowindow, and eventhandler, where would they all go once I created them? How would I access them again if necessary. I arbitrarily chose a `stack` struct object to hold my newly formed "vehicles" (i.e., add new properties of marker, infowindow, and eventhandler to each vehicle instance). I used `console.log()` to get sight into my stack, and the output is screenshotted below:
 
-![image](working-stack.png)
+![image](images/working-stack.png)
 
 ```javascript
   var vehicleStack = [];
@@ -135,6 +203,8 @@ Lastly, I wondered if I created all these instances of marker, infowindow, and e
 ```
 
 ## References:
+[https://developers.google.com/maps/documentation/javascript/tutorial](https://developers.google.com/maps/documentation/javascript/tutorial)
+
 [https://dmitripavlutin.com/foreach-iterate-array-javascript/](https://dmitripavlutin.com/foreach-iterate-array-javascript/)
 
 [https://stackoverflow.com/questions/36240520/creating-an-indefinite-amount-of-items](https://stackoverflow.com/questions/36240520/creating-an-indefinite-amount-of-items)
