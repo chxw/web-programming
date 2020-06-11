@@ -51,22 +51,22 @@ The following performance optimizations were performed.
 
 After each step, load times and size transferred were recorded to understand how each step affected performance. 
 
-_Before optimization:_
+#### Before optimization
 ![image](images/before-opt.png)
 
-_1_
+#### 1
 ![image](images/opt-1.png)
 
-_2_
+#### 2
 ![image](images/opt-2.png)
 
-_3_
+#### 3
 ![image](images/opt-3.png)
 
-_4_
+#### 4
 ![image](images/opt-4.png)
 
-_Graphed_
+#### Graphed
 ![image](images/graph-bar.png) ![image](images/graph-line.png)
 
 My results look a little wonky: it looks as if steps 1-3 improve optimization speed and step 4 slowed down optimization speed for some reason.
