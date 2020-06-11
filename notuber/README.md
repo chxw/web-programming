@@ -15,7 +15,7 @@ Given a list of vehicles with their locations, create a page that displays a Goo
 - A separate file for JS. 
 - Center the map on latitude = 42.352271, longitude = -71.05524200000001. This location is South Station in Boston, MA.
 
-This lab has been correctly implemented, no errors show in the console, and all requirements have been fulfilled. Additionally, "info windows" have been implemented, as suggested from a Piazza post. No direct collaboration or discussion outside of Piazza and the Internet.
+This lab has been correctly implemented, no errors show in the console, and all requirements have been fulfilled. Additionally, "info windows" have been implemented, as suggested from a Piazza post. No direct collaboration or discussion outside of Piazza and the Internet. Creating a working version of the lab took 1-2 hours, the readme and performance optimization testing took 1-2 hours.
 
 ## Files
 ```
@@ -69,7 +69,9 @@ After each step, load times and size transferred were recorded to understand how
 #### Graphed
 ![image](images/graph-bar.png) ![image](images/graph-line.png)
 
-My results look a little wonky: it looks as if steps 1-3 improve optimization speed and step 4 slowed down optimization speed for some reason.
+My results look a little wonky: it looks as if steps 1-3 improve optimization speed and step 4 slowed down optimization speed for some reason. I cleared cache each time before measuring speeds.
+
+Also I've included some graphs above, but realize in hindsight that I didn't peform any scaling. The graphs would have been better executed if I scaled in some way or taken the differences between each optimization step. Currently the "Finish (s)" values look non-existent in both graphs. 
 
 ## Reflections
 It felt wrong to write a script that treated the JSON data as fixed in length, specifically for a ride-hailing app, where the # of cars available at any given time would be unknown. Perhaps it makes more sense to treat JSON data as fixed in length in other cases, for example, making the same recurring API call and expecting the same length for the JSON data received. 
