@@ -66,6 +66,9 @@ _3_
 _4_
 ![image](images/opt-4)
 
+_Graphed_
+![image](images/graph-bar) ![image](images/graph-line)
+
 My results look a little wonky: it looks as if steps 1-3 improve optimization speed and step 4 slowed down optimization speed for some reason.
 
 ## Reflections
