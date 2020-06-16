@@ -1,48 +1,11 @@
-var vehicles = [
-    {
-        "id": "mXfkjrFw",
-        "latitude":42.3453,
-        "longitude":-71.0464
-    },
-    {
-        "id": "nZXB8ZHz",
-        "latitude":42.3662,
-        "longitude":-71.0621
-    },
-    {
-        "id": "Tkwu74WC",
-        "latitude":42.3603,
-        "longitude":-71.0547
-    },
-    {
-        "id": "5KWpnAJN",
-        "latitude":42.3472,
-        "longitude":-71.0802
-    },
-    {
-        "id": "uf5ZrXYw",
-        "latitude":42.3663,
-        "longitude":-71.0544
-    },
-    {
-        "id": "VMerzMH8",
-        "latitude":42.3542,
-        "longitude":-71.0704
-    }
-];
-
 var map;
 var sboston = {lat: 42.352271, lng: -71.05524200000001};
-var car = 'car.png' 
+var car = 'images/car.png' 
 var vehicleStack = [];
 
-function initSelf(){
-  geo = navigator.geolocation;
-  pos = geo.getCurrentPosition();
-  coords = pos.coords;
-
+function initUser(pos){
   var marker = new google.maps.Marker({
-    position: coords,
+    position: pos,
     map: map,
     animation: google.maps.Animation.DROP
   })
@@ -87,12 +50,18 @@ function initVehicle(vehicle){
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: sboston,
     zoom: 14
   });
 
-  // Create marker for user's location
-  initSelf();
+  // Get user position and create user marker
+  navigator.geolocation.getCurrentPosition(function(position) {
+    var pos = {
+      lat: position.coords.latitude,
+      lng:position.coords.longitude
+    };
+    map.setCenter(pos);
+    initUser(pos);
+  });
 
   // Create vehicles and place markers on map of where they are
   vehicles.forEach(initVehicle);
