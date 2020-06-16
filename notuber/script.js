@@ -1,6 +1,4 @@
 var map;
-var sboston = {lat: 42.352271, lng: -71.05524200000001};
-var car = 'images/car.png' 
 var vehicleStack = [];
 
 function initUser(pos){
@@ -11,11 +9,40 @@ function initUser(pos){
   })
 }
 
+function getJSON(lat, lng){
+  // Make instance of XMLHttpRequest object
+  var http = new XMLHttpRequest();
+
+  // Variables for HTTP request
+  var url = "https://jordan-marsh.herokuapp.com/rides";
+  var username = 'xIHNcana';
+  var params = 'username='+username+'&lat='+lat+'&lng='+lng;
+
+  // Make POST request
+  http.open('POST', url, true);
+
+  // Send the proper header information along with the request
+  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+  // Set up handler / callback function to deal with HTTP response
+  http.onreadystatechange = function(){
+    if(http.readyState == 4 && http.status == 200) {
+        var data = JSON.parse(http.responseText);
+        data.forEach(initVehicle);
+    }
+  }
+
+  // Send ("fire off") the request
+  http.send(params);
+}
+
 function initVehicle(vehicle){
   var id = vehicle.id;
-  var lat = vehicle.latitude;
-  var lng = vehicle.longitude;
+  var lat = parseFloat(vehicle.latitude);
+  var lng = parseFloat(vehicle.longitude);
   var pos = {lat, lng};
+  var created_at = vehicle.created_at;
+  var car = 'images/car.png'
 
   var contentString = '<div id="content">'+
         '<div id="siteNotice">'+
@@ -24,8 +51,10 @@ function initVehicle(vehicle){
         '<p>' + '<b> id: </b>' + id + '</p>' +
         '<p>' + '<b> lat: </b>' + lat + '</p>' +
         '<p>' + '<b> lng: </b>' + lng + '</p>' +
+        '<p>' + '<b> created at: </b>' + created_at + '</p>' +
         '</div>'+
         '</div>';
+
   var infowindow = new google.maps.InfoWindow({
           content: contentString
       });
@@ -33,9 +62,10 @@ function initVehicle(vehicle){
   var marker = new google.maps.Marker({
     position: pos,
     icon: car, 
-    map: map,
     animation: google.maps.Animation.DROP
   });
+
+  marker.setMap(map);
 
   marker.addListener('click', function(){
       infowindow.open(map,marker);
@@ -46,23 +76,30 @@ function initVehicle(vehicle){
   vehicle.marker = marker;
 
   vehicleStack.push(vehicle);
-}
+} d
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14
   });
 
-  // Get user position and create user marker
+  // Get user position
   navigator.geolocation.getCurrentPosition(function(position) {
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+
     var pos = {
-      lat: position.coords.latitude,
-      lng:position.coords.longitude
+      lat: lat,
+      lng: lng
     };
+
     map.setCenter(pos);
+
+    // Create user marker
     initUser(pos);
+
+    // Make request to ride-hailing API
+    getJSON(lat, lng);
   });
 
-  // Create vehicles and place markers on map of where they are
-  vehicles.forEach(initVehicle);
 }
