@@ -9,33 +9,6 @@ function initUser(pos){
   })
 }
 
-function getJSON(lat, lng){
-  // Make instance of XMLHttpRequest object
-  var http = new XMLHttpRequest();
-
-  // Variables for HTTP request
-  var url = "https://jordan-marsh.herokuapp.com/rides";
-  var username = 'xIHNcana';
-  var params = 'username='+username+'&lat='+lat+'&lng='+lng;
-
-  // Make POST request
-  http.open('POST', url, true);
-
-  // Send the proper header information along with the request
-  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-  // Set up handler / callback function to deal with HTTP response
-  http.onreadystatechange = function(){
-    if(http.readyState == 4 && http.status == 200) {
-        var data = JSON.parse(http.responseText);
-        data.forEach(initVehicle);
-    }
-  }
-
-  // Send ("fire off") the request
-  http.send(params);
-}
-
 function initVehicle(vehicle){
   var id = vehicle.id;
   var lat = parseFloat(vehicle.latitude);
@@ -76,19 +49,49 @@ function initVehicle(vehicle){
   vehicle.marker = marker;
 
   vehicleStack.push(vehicle);
-} d
+}
+
+function getJSON(lat, lng){
+  // Make instance of XMLHttpRequest object
+  var http = new XMLHttpRequest();
+
+  // Variables for HTTP request
+  var url = "https://jordan-marsh.herokuapp.com/rides";
+  var username = 'xIHNcana';
+  var params = 'username='+username+'&lat='+lat+'&lng='+lng;
+
+  var vehicles;
+
+  // Make POST request
+  http.open('POST', url, true);
+
+  // Send the proper header information along with the request
+  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+  // Set up handler / callback function to deal with HTTP response
+  http.onreadystatechange = function(){
+    if(http.readyState == 4 && http.status == 200) {
+        vehicles = JSON.parse(http.responseText);
+        vehicles.forEach(initVehicle);
+    }
+  }
+
+  // Send ("fire off") the request
+  http.send(params);
+}
 
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 14
-  });
+  var lat;
+  var lng;
+  var pos;
+  var vehicles;
 
   // Get user position
   navigator.geolocation.getCurrentPosition(function(position) {
-    var lat = position.coords.latitude;
-    var lng = position.coords.longitude;
+    lat = position.coords.latitude;
+    lng = position.coords.longitude;
 
-    var pos = {
+    pos = {
       lat: lat,
       lng: lng
     };
@@ -97,9 +100,13 @@ function initMap() {
 
     // Create user marker
     initUser(pos);
-
-    // Make request to ride-hailing API
-    getJSON(lat, lng);
   });
 
+  // Make request to ride-hailing API
+  getJSON(lat,lng);
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: pos, 
+    zoom: 14
+  });
 }
