@@ -33,8 +33,20 @@ var vehicles = [
 
 var map;
 var sboston = {lat: 42.352271, lng: -71.05524200000001};
-var car = 'car.png'
+var car = 'car.png' 
 var vehicleStack = [];
+
+function initSelf(){
+  geo = navigator.geolocation;
+  pos = geo.getCurrentPosition();
+  coords = pos.coords;
+
+  var marker = new google.maps.Marker({
+    position: coords,
+    map: map,
+    animation: google.maps.Animation.DROP
+  })
+}
 
 function initVehicle(vehicle){
   var id = vehicle.id;
@@ -71,7 +83,7 @@ function initVehicle(vehicle){
   vehicle.marker = marker;
 
   vehicleStack.push(vehicle);
-} 
+}
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -79,5 +91,9 @@ function initMap() {
     zoom: 14
   });
 
+  // Create marker for user's location
+  initSelf();
+
+  // Create vehicles and place markers on map of where they are
   vehicles.forEach(initVehicle);
 }
