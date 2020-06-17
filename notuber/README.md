@@ -40,9 +40,6 @@ This lab has been correctly implemented, no errors show in the console, and all 
 └── style.css
 ```
 
-## Reflections
-It felt wrong to write a script that treated the JSON data as fixed in length, specifically for a ride-hailing app, where the # of cars available at any given time would be unknown. Perhaps it makes more sense to treat JSON data as fixed in length in other cases, for example, making the same recurring API call and expecting the same length for the JSON data received. 
-
 
 ## References:
 [https://developers.google.com/maps/documentation/javascript/tutorial](https://developers.google.com/maps/documentation/javascript/tutorial)
