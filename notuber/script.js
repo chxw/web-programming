@@ -1,121 +1,54 @@
-function initMap(){
-  var map, user, infoWindow;
-  var closest = {};
-  var sboston = {lat: 42.352271, lng: -71.05524200000001};
-  var vehicleStack = [];
-
-  // Create map
-  map = new google.maps.Map(document.getElementById('map'),{
-    center: sboston,
-    zoom: 7
-  });
-
-  // Create user marker and infowindow
-  infoWindow = new google.maps.InfoWindow;
-  user = new google.maps.Marker({
-    map: map,
-    animation: google.maps.Animation.DROP
-  });
-
-  navigator.geolocation.getCurrentPosition(function(position) {
-    // Get user location
-    var userPos = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
-
-    var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-    // Set information window to user
-    infoWindow.setPosition(userPos);
-    user.addListener('click', function(){
-      infoWindow.open(map,user);
+function getPosition() {
+    // Simple wrapper
+    return new Promise((res, rej) => {
+        navigator.geolocation.getCurrentPosition(res, rej);
     });
+}
 
-    // Move marker to and center map to user location
-    user.setPosition(userPos);
-    map.setCenter(userPos);
+function initUser(result){
+	var user = new Object();
 
-    // Make instance of XMLHttpRequest object
-    var http = new XMLHttpRequest();
+	user.position ={
+		lat: result.coords.latitude,
+		lng: result.coords.longitude
+	}
 
-    // Set variables for POST request to API
-    var url = "https://jordan-marsh.herokuapp.com/rides";
-    var username = 'xIHNcana';
-    var params = "username="+username+"&lat="+userPos.lat+"&lng="+userPos.lng;
+	user.latLng = new google.maps.LatLng(result.coords.latitude, result.coords.longitude);
+	infoWindow = new google.maps.InfoWindow;
 
-    // Make POST request
-    http.open('POST', url, true);
+	var userMarker = new google.maps.Marker({
+		animation: google.maps.Animation.DROP
+	})
 
-    // Send proper header information along with request
-    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	infoWindow.setPosition(user.position);
+	userMarker.setPosition(user.position);
 
+	user.marker = userMarker;
+	user.infoWindow = infoWindow;
 
-    // Call back function to deal with HTTP response
-    http.onreadystatechange = function(){
-      if (http.readyState == 4 && http.status == 200){
-        var jsonObject = JSON.parse(http.responseText);
+	return user;
+}
 
-        closest["distance"] = Number.POSITIVE_INFINITY;
-        // Create markers for every car in JSON
-        for (var key in jsonObject){
-          if (jsonObject.hasOwnProperty(key)){
-            var vehicle = jsonObject[key];
-            var id = vehicle.id;
-            var lat = parseFloat(vehicle.lat);
-            var lng = parseFloat(vehicle.lng);
-            var un = vehicle.username;
-            var icon = 'images/car.png';
-            var pos = {lat: lat, lng: lng};
+function calibrateMap(user){
+	// Create map
+	map = new google.maps.Map(document.getElementById('map'),{
+		zoom: 7
+	});
 
-            var marker = new google.maps.Marker({
-              position: pos,
-              map: map,
-              icon: icon,
-              animation:google.maps.Animation.DROP
-            })
+	map.setCenter(user.position);
 
-            // Translate to LatLng object
-            var carLatLng = new google.maps.LatLng(lat, lng);
+	user.marker.addListener('click', function(){
+		user.infoWindow.open(map,user);
+	})
 
-            // Compute distance between car and user
-            var distance = google.maps.geometry.spherical.computeDistanceBetween(userLatLng, carLatLng);
+	user.marker.setMap(map);
+}
 
-            // Check if it is the shortest distance
-            if (distance < closest["distance"]){
-              closest["lat"] = lat;
-              closest["lng"] = lng
-              closest["distance"] = distance;
-            }
-          }
-        }
+function initMap(){
+	var map;
 
-        // Determine to and from coordinates for car closest to user
-        var closestCarCoords = [userPos,{lat: closest["lat"], lng: closest["lng"]}];
-
-        // Draw polyline
-        var path = new google.maps.Polyline({
-          path:closestCarCoords,
-          geodesic: true,
-          strokeColor: '#FF0000',
-          strokeOpacity: 1.0,
-          strokeWeight: 2
-        });
-        path.setMap(map);
-
-        // Convert distance from meters to miles
-        var distanceInMiles = closest["distance"]*0.00062137;
-
-        // Set infoWindow content
-        var contentString = 
-        '<h1>' + 'You are here' + '</h1>' +
-        '<p>' + 'The closest car to you is ' + distanceInMiles + ' miles away. </p>';
-
-        infoWindow.setContent(contentString);
-      }
-    }
-
-    // Send request
-    http.send(params);
-  });
+	getPosition()
+		.then((result)=>initUser(result))
+		.then((user)=>calibrateMap(user))
+	;
 }
