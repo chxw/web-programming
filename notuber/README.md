@@ -225,3 +225,5 @@ Lastly, I wondered if I created all these instances of marker, infowindow, and e
 [https://stackoverflow.com/questions/47544564/how-geolocation-getcurrentposition-return-value](https://stackoverflow.com/questions/47544564/how-geolocation-getcurrentposition-return-value)
 
 [https://stackoverflow.com/questions/14220321/how-do-i-return-the-response-from-an-asynchronous-call](https://stackoverflow.com/questions/14220321/how-do-i-return-the-response-from-an-asynchronous-call)
+
+[https://stackoverflow.com/questions/45872878/google-map-infowindow-not-opening-on-click-in-loop](https://stackoverflow.com/questions/45872878/google-map-infowindow-not-opening-on-click-in-loop)

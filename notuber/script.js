@@ -1,5 +1,4 @@
 function getPosition() {
-    // Simple wrapper
     return new Promise((res, rej) => {
         navigator.geolocation.getCurrentPosition(res, rej);
     });
@@ -27,7 +26,6 @@ function initUser(result){
 }
 
 function calibrateMap(user){
-	// Create map
 	map = new google.maps.Map(document.getElementById('map'),{
 		zoom: 7
 	});
@@ -41,9 +39,9 @@ function calibrateMap(user){
 
 function initCars(jsonObject, user){
 	var closest = {};
+	var infoWindow = new google.maps.InfoWindow();
 
 	closest["distance"] = Number.POSITIVE_INFINITY;
-	// Create markers for every car in JSON
 	for (var key in jsonObject){
 	  if (jsonObject.hasOwnProperty(key)){
 	    var vehicle = jsonObject[key];
@@ -71,12 +69,22 @@ function initCars(jsonObject, user){
 	      closest["lng"] = lng
 	      closest["distance"] = distance;
 	    }
+
+	    marker.distance = (distance*0.00062137).toFixed(2);
+
+	    marker.content = 
+	    	'<p>' + 'This car is ' + marker.distance + ' miles away from you. </p>';
+
+	    google.maps.event.addListener(marker, 'click', function(){
+	    	infoWindow.setOptions({
+	    		content: this.content
+	    	});
+	    	infoWindow.open(user.map, this);
+	    });
 	  }
 	}
 
-	// Create property that points to exact car marker? user.closestCar = car;
-
-	user.closestDistance = closest["distance"]*0.00062137; // convert from meters to miles
+	user.closestDistance = (closest["distance"]*0.00062137).toFixed(2); // convert from meters to miles
     user.closestCoords = [user.position,{lat: closest["lat"], lng: closest["lng"]}];
 
 	return user;
