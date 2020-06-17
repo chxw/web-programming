@@ -8,14 +8,14 @@ chxw
 ## Summary
 Ride-Hailing Service (Client-side) Part 2
 
-Given a list of vehicles with their locations, create a page that displays a Google Map of all the vehicles listed above. Requirements:
+Implement four features into ride-hailing map from last week:
 
-- The map shall take up the entire page.
-- A CSS file is required in order for GMaps to work.
-- A separate file for JS. 
-- Center the map on latitude = 42.352271, longitude = -71.05524200000001. This location is South Station in Boston, MA.
+- Determine geolocation using JS `navigator.geolocation` object. Place a marker of where the user is located on the map. 
+- Make a request to the ride-hailing API, providing your `username`, `lat`, `lng` as parameters. Upon successful request, ride-hailing API will give a list of vehicles to mark onto map in a string JSON list. The ride request API `https://jordan-marsh.herokuapp.com/rides` is HTTP POST only. CORS is enabled for this API. As in part 1, each vehicle on the map will be a marker with the car icon.
+- Upon click on user marker on th emap, display an information window noting the closest vehicle form where you are including the distance away in miles.
+- Render a polyline (any color) that connects user marker to the marker of the closeset vehicle.
 
-This lab has been correctly implemented, no errors show in the console, and all requirements have been fulfilled. Additionally, "info windows" have been implemented, as suggested from a Piazza post. No direct collaboration or discussion outside of Piazza and the Internet. Creating a working version of the lab took 1-2 hours, the readme and performance optimization testing took 1-2 hours.
+This lab has been correctly implemented, no errors show in the console, and all requirements have been fulfilled. Additionally, one of the "Going Beyond" items was implemented: upon clicking on a maerk for a vehicle, show popu infowindow noting how far away the vehicle is, in miles, from you. No direct collaboration or discussion outside of Piazza and the Internet. This lab took 4-5 hours.
 
 ## Files
 ```
@@ -36,176 +36,13 @@ This lab has been correctly implemented, no errors show in the console, and all 
 │   ├── script-archived.png
 │   └── working-stack.png
 ├── index.html
-├── script-archived.js
 ├── script.js
-├── style.css
-└── vehicles.json
+└── style.css
 ```
-## Performance Optimization testing
-
-The following performance optimizations were performed. 
-1. Load CSS first, head section
-2. Minify CSS
-3. Move JS includes and code to bottom of HTML before closing body tag
-4. Minify JS code
-
-After each step, load times and size transferred were recorded to understand how each step affected performance. 
-
-#### Before optimization
-![image](images/before-opt.png)
-
-#### 1
-![image](images/opt-1.png)
-
-#### 2
-![image](images/opt-2.png)
-
-#### 3
-![image](images/opt-3.png)
-
-#### 4
-![image](images/opt-4.png)
-
-#### Graphed
-![image](images/graph-bar.png) ![image](images/graph-line.png)
-
-My results look a little wonky: it looks as if steps 1-3 improve optimization speed and step 4 slowed down optimization speed for some reason. I cleared cache each time before measuring speeds.
-
-Also I've included some graphs above, but realize in hindsight that I didn't peform any scaling. The graphs would have been better executed if I scaled in some way or taken the differences between each optimization step. Currently the "Finish (s)" values look non-existent in both graphs. 
 
 ## Reflections
 It felt wrong to write a script that treated the JSON data as fixed in length, specifically for a ride-hailing app, where the # of cars available at any given time would be unknown. Perhaps it makes more sense to treat JSON data as fixed in length in other cases, for example, making the same recurring API call and expecting the same length for the JSON data received. 
 
-### For .. in
-
-In my lab, I first started with a `for..in` loop to iterate over the array created (`vehicles`). See snippet below.  Where for every entry in the array `vehicles`, that entry's held data is used to format the map markers and info window. 
-
-```javascript
-for (var key in vehicles){
-  if (vehicles.hasOwnProperty(key)){
-    var id = vehicles[key].id;
-  	var lat = vehicles[key].latitude;
-  	var lng = vehicles[key].longitude;
-  	var pos = {lat, lng};
-
-    var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<div id="bodyContent">'+
-      '<p>' + '<b> id: </b>' + id + '</p>' +
-      '<p>' + '<b> lat: </b>' + lat + '</p>' +
-      '<p>' + '<b> lng: </b>' + lng + '</p>' +
-      '</div>'+
-      '</div>';
-
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
-
-  	var marker = new google.maps.Marker({
-  		position: pos,
-  		icon: car, 
-  		map: map,
-  		animation: google.maps.Animation.DROP
-  	});
-
-    marker.addListener('click', function(){
-        infowindow.open(map,marker);
-    });
-  }
-}
-```
-
-This version created successfully unique instances of markers but it did *not* create unique instances of markers. Furthermore, every time any car was clicked, only 1 infowindow for 1 car showed up, no matter which car was clicked (i.e. it seems only 1 instance of infowindow was created). My guess is that there were unique instances of all the markers and infowindows via the `var ... new` initialization, as well as unique event handlers because the page responded whenever any car was clicked. But the event handler was listening to only 1 `infowindow` which is referenced in the `marker.addListener` line. As in, the event handler would listen to 1 marker, but move on to listening to the next marker at each iteration of the for loop. To see this version in action, change line 12 in `index.html` from `<script src="script.js"></script>` to `<script src="script-archived.js"></script>`. Below is a screenshot:
-
-![image](images/script-archived.png)
-
-### forEach
-
-My second attempt, I tried using the `forEach` method of the JS array object. I'm guessing because this method exists for the array object in JS, it is best practice anyway to use this instead of the `for .. in` loop when possible.
-
->`forEach()` method of the array object iterates over the array’s items, in ascending order, without mutating the array
-
-See snippet below.
-
-```javascript
-function initVehicle(vehicle){
-  var id = vehicle.id;
-  var lat = vehicle.latitude;
-  var lng = vehicle.longitude;
-  var pos = {lat, lng};
-
-  var contentString = '<div id="content">'+
-        '<div id="siteNotice">'+
-        '</div>'+
-        '<div id="bodyContent">'+
-        '<p>' + '<b> id: </b>' + id + '</p>' +
-        '<p>' + '<b> lat: </b>' + lat + '</p>' +
-        '<p>' + '<b> lng: </b>' + lng + '</p>' +
-        '</div>'+
-        '</div>';
-  var infowindow = new google.maps.InfoWindow({
-          content: contentString
-      });
-
-  var marker = new google.maps.Marker({
-    position: pos,
-    icon: car, 
-    map: map,
-    animation: google.maps.Animation.DROP
-  });
-
-  marker.addListener('click', function(){
-      infowindow.open(map,marker);
-  });
-
-  vehicleStack.push(vehicle);
-} 
-
-// Generate map
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: sboston,
-    zoom: 14
-  });
-
-  vehicles.forEach(initVehicle);
-}
-```
-
-I'm not entirely sure why the `forEach` attempt worked whereas the `for ..in` loop didn't, as I simply copied and pasted the code for creating infowindow, marker, and eventhandler to a function that I call in `vehicles.forEach(initVehicle)`. As this is the only difference between the `forEach` and `for ..in` attempts, I'm assuming the solution is related to scoping in some way. In an abstract way, I imagine `forEach` treated each array item more discretely compared to the for loop. Perhaps there was some scope leakage in the `for ..in` loop where my instances leaked into the global scope; and in this version, the leakage was avoided.
-
-### Stack
-
-Lastly, I wondered if I created all these instances of marker, infowindow, and eventhandler, where would they all go once I created them? How would I access them again if necessary. I arbitrarily chose a `stack` struct object to hold my newly formed "vehicles" (i.e., add new properties of marker, infowindow, and eventhandler to each vehicle instance). I used `console.log()` to get sight into my stack, and the output is screenshotted below:
-
-![image](images/working-stack.png)
-
-```javascript
-  var vehicleStack = [];
-
-  ...
-
-
-  function initVehicle(vehicle){ 
-    ...
-
-    // add properties to capture new data
-    vehicle.contentString = contentString;
-    vehicle.infoWindow = infowindow;
-    vehicle.marker = marker;
-
-    vehicleStack.push(vehicle);
-  }
-
-  // Get sight into vehicleStack
-
-  for (let key in vehicleStack) {
-   if (vehicleStack.hasOwnProperty(key)) {
-      console.log(key, vehicleStack[key]);
-   }
-  }
-```
 
 ## References:
 [https://developers.google.com/maps/documentation/javascript/tutorial](https://developers.google.com/maps/documentation/javascript/tutorial)
