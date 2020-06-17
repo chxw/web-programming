@@ -3,10 +3,10 @@
 chxw
 
 ## Date
-6/10/2020
+6/17/2020
 
 ## Summary
-Ride-Hailing Service (Client-side) Part 1
+Ride-Hailing Service (Client-side) Part 2
 
 Given a list of vehicles with their locations, create a page that displays a Google Map of all the vehicles listed above. Requirements:
 
