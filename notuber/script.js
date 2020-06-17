@@ -75,8 +75,9 @@ function initCars(jsonObject, user){
 	}
 
 	// Create property that points to exact car marker? user.closestCar = car;
+
+	user.closestDistance = closest["distance"]*0.00062137; // convert from meters to miles
     user.closestCoords = [user.position,{lat: closest["lat"], lng: closest["lng"]}];
-    user.closestDistance = closest["distance"];
 
 	return user;
 }
@@ -93,13 +94,11 @@ function callAPI(user){
     http.onreadystatechange = function(){
     	if (http.readyState == 4 && http.status == 200){
     		var jsonObject = JSON.parse(http.responseText);
-    		user = drawLine(initCars(jsonObject, user));
+    		initInfoWindow(drawLine(initCars(jsonObject, user)));
     	}
     }
 
     http.send(params);
-
-    return user;
 }
 
 function drawLine(user){
@@ -116,10 +115,6 @@ function drawLine(user){
 }
 
 function initInfoWindow(user){
-	console.log(user);
-
-    user.closestDistance = user.closestDistance*0.00062137; // convert from meters to miles
-
     var contentString = 
     '<h1>' + 'You are here' + '</h1>' +
     '<p>' + 'The closest car to you is ' + user.closestDistance + ' miles away. </p>';
@@ -132,8 +127,6 @@ function initInfoWindow(user){
 	user.marker.addListener('click', function(){
 		infoWindow.open(user.map,user.marker);
 	});
-
-	return user;
 }
 
 function initMap(){
@@ -143,6 +136,5 @@ function initMap(){
 		.then((result)=>initUser(result))
 		.then((user)=>calibrateMap(user))
 		.then((user)=>callAPI(user))
-		.then((user)=>initInfoWindow(user))
 	;
 }
