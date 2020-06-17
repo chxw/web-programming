@@ -131,6 +131,7 @@ function initInfoWindow(user){
     infoWindow.setContent(contentString);
 
 	user.marker.addListener('click', function(){
+		// issue here
 		infoWindow.open(user.map,user);
 	})
 }
