@@ -14,7 +14,6 @@ function initUser(result){
 		lat: user.lat,
 		lng: user.lng
 	}
-
 	user.latLng = new google.maps.LatLng(user.lat, user.lng);
 
 	var userMarker = new google.maps.Marker({
@@ -22,7 +21,6 @@ function initUser(result){
 	})
 
 	userMarker.setPosition(user.position);
-
 	user.marker = userMarker;
 
 	return user;
@@ -118,22 +116,24 @@ function drawLine(user){
 }
 
 function initInfoWindow(user){
-    // Convert distance from meters to miles
-    user.closestDistance = user.closestDistance*0.00062137;
+	console.log(user);
 
-    // Set infoWindow content
+    user.closestDistance = user.closestDistance*0.00062137; // convert from meters to miles
+
     var contentString = 
     '<h1>' + 'You are here' + '</h1>' +
     '<p>' + 'The closest car to you is ' + user.closestDistance + ' miles away. </p>';
 
-    infoWindow = new google.maps.InfoWindow;
-    infoWindow.setPosition(user.position);
-    infoWindow.setContent(contentString);
+    var infoWindow = new google.maps.InfoWindow({
+    	content: contentString,
+    	position: user.position
+    });
 
 	user.marker.addListener('click', function(){
-		// issue here
-		infoWindow.open(user.map,user);
-	})
+		infoWindow.open(user.map,user.marker);
+	});
+
+	return user;
 }
 
 function initMap(){

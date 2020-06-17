@@ -221,3 +221,5 @@ Lastly, I wondered if I created all these instances of marker, infowindow, and e
 [https://developers.google.com/maps/documentation/javascript/reference/geometry](https://developers.google.com/maps/documentation/javascript/reference/geometry)
 
 [https://www.metric-conversions.org/length/meters-to-miles.htm](https://www.metric-conversions.org/length/meters-to-miles.htm)
+
+[https://stackoverflow.com/questions/47544564/how-geolocation-getcurrentposition-return-value](https://stackoverflow.com/questions/47544564/how-geolocation-getcurrentposition-return-value)
