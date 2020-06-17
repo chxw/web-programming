@@ -213,3 +213,11 @@ Lastly, I wondered if I created all these instances of marker, infowindow, and e
 [https://dmitripavlutin.com/foreach-iterate-array-javascript/](https://dmitripavlutin.com/foreach-iterate-array-javascript/)
 
 [https://stackoverflow.com/questions/36240520/creating-an-indefinite-amount-of-items](https://stackoverflow.com/questions/36240520/creating-an-indefinite-amount-of-items)
+
+[https://stackoverflow.com/questions/5634991/styling-google-maps-infowindow](https://stackoverflow.com/questions/5634991/styling-google-maps-infowindow)
+
+[https://stackoverflow.com/questions/37600543/google-maps-a-lat-is-not-a-function](https://stackoverflow.com/questions/37600543/google-maps-a-lat-is-not-a-function)
+
+[https://developers.google.com/maps/documentation/javascript/reference/geometry](https://developers.google.com/maps/documentation/javascript/reference/geometry)
+
+[https://www.metric-conversions.org/length/meters-to-miles.htm](https://www.metric-conversions.org/length/meters-to-miles.htm)
