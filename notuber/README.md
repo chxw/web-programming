@@ -223,3 +223,5 @@ Lastly, I wondered if I created all these instances of marker, infowindow, and e
 [https://www.metric-conversions.org/length/meters-to-miles.htm](https://www.metric-conversions.org/length/meters-to-miles.htm)
 
 [https://stackoverflow.com/questions/47544564/how-geolocation-getcurrentposition-return-value](https://stackoverflow.com/questions/47544564/how-geolocation-getcurrentposition-return-value)
+
+[https://stackoverflow.com/questions/14220321/how-do-i-return-the-response-from-an-asynchronous-call](https://stackoverflow.com/questions/14220321/how-do-i-return-the-response-from-an-asynchronous-call)
