@@ -18,6 +18,20 @@
 <p>This server is vulnerable to attackers accessing sensitive information from restricted databases and excessive requests spamming the database with junk information.</p>
 
 <h2>Issues Found<h2>
+	<h3>Cross-Site Scripting (XSS)</h3>
+	<p>Attackers are able to abuse POST /rides by injecting javascript into username value. </p>
+
+	<p><strong>Location</strong></p> <code> POST /rides </code>
+
+	<p><strong>Severity of issue</strong></p>
+	<p>High severity, entire website can be co-opted by attackers -- as seen with this lab.</p>
+	
+	<p><strong>Proof of vulnerability</strong></p>
+	<img src="XSS.png" alt="Cross-Site Scripting attacks">
+
+	<p><strong>Resolution</strong></p>
+	<p> Filter input on arrival. Encode data on output. Use appropriate response headers for HTTP responses that aren't inteneded to contain any HTML or JavaScript (i.e. use <code>Content-Type</code> and <code>X-Content-Type-Options</code> headers to ensure that browsers interpret the response the way you intend. As a last line of defense, Content Security Policy.</p>
+
 	<h3>Database leakage</h3>
 	<p>Since the accepted vehicle usernames are hardcoded in the source code, if an attacker is able to access the usernames, they are able to gain access to vehicles database.</p>
 
@@ -40,7 +54,7 @@
 	<p><strong>Location</strong></p> <code> POST /rides, POST /update </code>
 
 	<p><strong>Severity of issue</strong></p>
-	<p> High severity if source code is vulnerable, i.e. pushed to github>
+	<p> High severity -- database can be co-opted by attackers.</p>
 
 	<p><strong>Proof of vulnerability</strong></p>
 	<img src="spam.png" alt="Spam requests">
@@ -49,7 +63,7 @@
 	<p> Route middleware from a number of packages that offer this. </p>
 
 <h2>Conclusion</h2>
-<p>This server should implement <code>.env</code> files as well as route middleware for authentication.</p>
+<p>This server should implement <code>.env</code> files, route middleware for authentication, and sanitize user input data. Additionally, this server suffers from insufficient logging. </p>
 
 </body>
 </html>
