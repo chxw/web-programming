@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Security Assessment</title>
+</head>
+<body>
+
+<h1>Security Assessment</h1>
+<h2>Introduction</h2>
+<p><a href="https://jordan-marsh.herokuapp.com/">https://jordan-marsh.herokuapp.com/</a> is a simple server ride-hailing API. POST /rides inserts a passenger's information to server database -- requires username, lat, and lng values. POST /update inserts a vehicle's information to server database -- requires username, lat, lng values. GET /passenger.json requires "username=value" query and displays passengers with username of value. GET /vehicle.json requires "username=value" query and displays vehicles with username of value. GET / displays all entries in passengers database orderd by creation time. </p>
+
+<h2>Methodology</h2>
+<p>Using the OWASP Top 10, test for the top 10 Web Application Security Risks in <a href="https://jordan-marsh.herokuapp.com/">https://jordan-marsh.herokuapp.com/</a>.</p>
+
+<p>Tools used include Burp Suite Community Edition v2020.5.1 and FoxyProxy.</p>
+
+<h2>Abstract of Findings</h2>
+<p>This server is vulnerable to attackers accessing sensitive information from restricted databases and excessive requests spamming the database with junk information.</p>
+
+<h2>Issues Found<h2>
+	<h3>Database leakage</h3>
+	<p>Since the accepted vehicle usernames are hardcoded in the source code, if an attacker is able to access the usernames, they are able to gain access to vehicles database.</p>
+
+	<p><code>var vehicles = ["JANET","NgfcWZmS", "tNEh59TC", "suFKyeZg", "VMerzMH8", "6tWDkKh6", "ajNnfhJj", "bCxY6mCw", "Cq4NX9eE", "mXfkjrFw", "EMYaM9D8", "nZXB8ZHz", "Tkwu74WC", "TnA763WN", "TaR8XyMe", "5KWpnAJN", "uf5ZrXYw"];</code></p>
+
+	<p><strong>Location</strong></p> <code> POST /UPDATE </code>
+
+	<p><strong>Severity of issue</strong></p>
+	<p> High severity if source code is vulnerable, i.e. pushed to github</p>
+
+	<p><strong>Proof of vulnerability</strong></p>
+	<img src="access-vehicles.png" alt="Access vehicles database information via hardcoded vehicle usernames">
+
+	<p><strong>Resolution</strong></p>
+	<p> Store accepted vehicle usernames in environment variables from <code>.env</code> file.</p>
+
+	<h3>No Authentication</h3>
+	<p>The routes with <code>response.header("Access-Control-Allow-Origin", "*");</code> are vulnerable to attackers writing a script and sending a ton of junk requests with fake data to spam the database.</p>
+
+	<p><strong>Location</strong></p> <code> POST /rides, POST /update </code>
+
+	<p><strong>Severity of issue</strong></p>
+	<p> High severity if source code is vulnerable, i.e. pushed to github>
+
+	<p><strong>Proof of vulnerability</strong></p>
+	<img src="spam.png" alt="Spam requests">
+
+	<p><strong>Resolution</strong></p>
+	<p> Route middleware from a number of packages that offer this. </p>
+
+<h2>Conclusion</h2>
+<p>This server should implement <code>.env</code> files as well as route middleware for authentication.</p>
+
+</body>
+</html>
