@@ -26,11 +26,11 @@ Document and resolve the security and privacy issues of a ride-hailing service A
 ## Reflection:
 I was able to identify 3 security and privacy issues with the ride-hailing service API. I saw that others in the course were able to perform XSS attacks, but I was unable to successfully execute these, though I tried. See below for attempted XSS and SQL injection attacks I tried to perform using the Burp suite.
 
-![XSS](1)
-![Encoded XSS](2)
-![SQL injection](3)
-![SQL injection](4)
-![XSS](5)
+![XSS](1.png)
+![Encoded XSS](2.png)
+![SQL injection](3.png)
+![SQL injection](4.png)
+![XSS](5.png)
 
 
 I spent 5 hours working on this lab. No collaboration or discussion with others on this assignment. 
