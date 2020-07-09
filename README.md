@@ -2,8 +2,14 @@
 
 ## notuber
 ### Objectives
-1. Use Google Maps API.
+1. Practice using Google Maps API.
 2. Create a simple ride-hailing API (client-side).
+
+## simple-API (separate repo)
+### Objectives
+1. Practice using NodeJS and Express.
+2. Create a simple ride-hailing API (server-side).
+3. Deploy to Heroku.
 
 ## security
 ### Objectives
