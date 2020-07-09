@@ -5,7 +5,7 @@
 1. Practice using Google Maps API.
 2. Create a simple ride-hailing API (client-side).
 
-## simple-API (separate repo)
+## [simple-API](https://github.com/chxw/simple-API)
 ### Objectives
 1. Practice using NodeJS and Express.
 2. Create a simple ride-hailing API (server-side).
